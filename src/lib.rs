@@ -7,14 +7,14 @@ use std::fmt;
 
 /// Errors produced by this component. Fail-fast: errors are returned, not panicked.
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub enum Sigmaos_dbscriptsError {
+pub enum DbscriptsError {
     /// The requested operation is not valid in the current state.
     InvalidState,
     /// Input failed validation.
     InvalidInput(String),
 }
 
-impl fmt::Display for Sigmaos_dbscriptsError {
+impl fmt::Display for DbscriptsError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         match self {
             Self::InvalidState => write!(f, "invalid state"),
@@ -23,20 +23,20 @@ impl fmt::Display for Sigmaos_dbscriptsError {
     }
 }
 
-impl std::error::Error for Sigmaos_dbscriptsError {}
+impl std::error::Error for DbscriptsError {}
 
 /// Core component type. Holds configuration; performs no I/O by default.
 #[derive(Debug, Clone, Default)]
-pub struct Sigmaos_dbscripts {
+pub struct Dbscripts {
     name: String,
 }
 
-impl Sigmaos_dbscripts {
+impl Dbscripts {
     /// Create a new component instance. Fails fast on empty names.
-    pub fn new(name: impl Into<String>) -> Result<Self, Sigmaos_dbscriptsError> {
+    pub fn new(name: impl Into<String>) -> Result<Self, DbscriptsError> {
         let name = name.into();
         if name.trim().is_empty() {
-            return Err(Sigmaos_dbscriptsError::InvalidInput("name must not be empty".into()));
+            return Err(DbscriptsError::InvalidInput("name must not be empty".into()));
         }
         Ok(Self { name })
     }
@@ -47,9 +47,9 @@ impl Sigmaos_dbscripts {
     }
 
     /// Perform the component's primary action. Returns a deterministic result.
-    pub fn run(&self) -> Result<String, Sigmaos_dbscriptsError> {
+    pub fn run(&self) -> Result<String, DbscriptsError> {
         if self.name.is_empty() {
-            return Err(Sigmaos_dbscriptsError::InvalidState);
+            return Err(DbscriptsError::InvalidState);
         }
         Ok(format!("{}: ok", self.name))
     }
@@ -62,18 +62,18 @@ mod tests {
     #[test]
     fn new_rejects_empty_name() {
         // Arrange / Act / Assert
-        assert!(matches!(Sigmaos_dbscripts::new("  "), Err(Sigmaos_dbscriptsError::InvalidInput(_))));
+        assert!(matches!(Dbscripts::new("  "), Err(DbscriptsError::InvalidInput(_))));
     }
 
     #[test]
     fn run_returns_deterministic_result() {
-        let c = Sigmaos_dbscripts::new("test").unwrap();
+        let c = Dbscripts::new("test").unwrap();
         assert_eq!(c.run().unwrap(), "test: ok");
     }
 
     #[test]
     fn name_is_accessible() {
-        let c = Sigmaos_dbscripts::new("abc").unwrap();
+        let c = Dbscripts::new("abc").unwrap();
         assert_eq!(c.name(), "abc");
     }
 }
