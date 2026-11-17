@@ -3,7 +3,7 @@ name = "SigmaOS-dbscripts"
 tier = 2
 stability = "scaffold"
 language = "rust"
-description = "dbscripts component"
+description = "SigmaOS dbscripts component (Arch Linux inspired)"
 upstream = []
 
 [contract]
