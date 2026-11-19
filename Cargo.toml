@@ -1,8 +1,15 @@
 [package]
-name = "sigmaos-dbscripts"
+name = "SigmaOS-dbscripts"
 version = "0.1.0"
 edition = "2021"
-license = "MIT"
-description = "Package repository DB management scripts — SigmaOS component inspired by Arch Linux infrastructure."
+license = "Apache-2.0"
+description = "SigmaOS dbscripts component"
+
+[lib]
+name = "dbscripts"
+path = "src/lib.rs"
 
 [dependencies]
+thiserror = "1"
+
+[dev-dependencies]
