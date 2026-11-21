@@ -1,16 +1,16 @@
 [component]
 name = "SigmaOS-dbscripts"
 tier = 2
-stability = "scaffold"
+stability = "beta"
 language = "rust"
 description = "SigmaOS dbscripts component (Arch Linux inspired)"
-upstream = []
+upstream = ["https://github.com/archlinux/dbscripts"]
 
 [contract]
-provides = ["component"]
+provides = ["repo-db-gen", "pkgfile-parser", "db-update-checks"]
 depends_on = []
 
 [maturity]
 status = "Implemented"
-test_evidence = "Compiles and passes AAA unit tests"
+test_evidence = "cargo test: 15 tests pass (.PKGINFO extract, repo.db roundtrip, staging validation)"
 next_milestone = "Hardware and runtime integration"
